@@ -18,11 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminController {
     private final AdminService adminService;
 
-    @Operation(summary = "회원 목록 조회")    //Swagger(OpenAPI) 문서를 자동으로 생성하기 위한 어노테이션 -> 메서드에 대한 설명(summary)을 지정
-    @GetMapping("/members")
-    public ApiResponse getAllMembers() {
-        return ApiResponse.success(adminService.getMembers());
-    } //회원 목록을 가져온 후, 성공적인 응답으로 감싸서 반환
 
     @Operation(summary = "관리자 목록 조회")
     @GetMapping("/admins")

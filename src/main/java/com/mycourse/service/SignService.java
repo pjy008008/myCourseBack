@@ -37,6 +37,6 @@ public class SignService {
                 .filter(it -> encoder.matches(request.password(), it.getPassword()))
                 .orElseThrow(() -> new IllegalArgumentException("아이디 또는 비밀번호가 일치하지 않습니다."));
         String token = tokenProvider.createToken(String.format("%s:%s", member.getId(), member.getType()));
-        return new SignInResponse(member.getMajor(), member.getType(), token);
+        return new SignInResponse(member.getPrefer(), member.getType(), token);
     }
 }
