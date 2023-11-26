@@ -11,7 +11,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
+import java.util.UUID;      //범용 고유 식별자
 
 @Tag(name = "로그인 후 사용할 수 있는 API")
 @RequiredArgsConstructor
@@ -23,8 +23,8 @@ public class MemberController {
 
     @Operation(summary = "회원 정보 조회")
     @GetMapping
-    public ApiResponse getMemberInfo(@AuthenticationPrincipal User user) {
-        return ApiResponse.success(memberService.getMemberInfo(UUID.fromString(user.getUsername())));
+    public ApiResponse getMemberInfo(@AuthenticationPrincipal User user) {  //User 객체는 Spring Security에서 제공하는 사용자 정보 객체 -> 사용자의 식별자 가져옴
+        return ApiResponse.success(memberService.getMemberInfo(UUID.fromString(user.getUsername())));   //문자열을 UUID로 변환하는 역할
     }
 
     @Operation(summary = "회원 탈퇴")

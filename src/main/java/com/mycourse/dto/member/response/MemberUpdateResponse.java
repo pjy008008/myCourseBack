@@ -3,6 +3,7 @@ package com.mycourse.dto.member.response;
 import com.mycourse.entity.Member;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.util.List;
 import java.util.Map;
 
 public record MemberUpdateResponse(
@@ -14,8 +15,8 @@ public record MemberUpdateResponse(
         Integer stdnum,
         @Schema(description = "학년",example = "2")
         Integer grade,
-        @Schema(description = "이수 과목",example = "[123,124]")
-        String subject
+        @Schema(description = "이수 과목", example = "[[123, 124], [125, 126]]")
+        List<List<Integer>> subject
 ) {
     public static MemberUpdateResponse of(boolean result, Member member) {
         return new MemberUpdateResponse(result, member.getMajor(), member.getStdnum(),member.getGrade(),member.getSubject());

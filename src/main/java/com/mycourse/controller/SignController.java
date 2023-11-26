@@ -21,8 +21,8 @@ public class SignController {
 
     @Operation(summary = "회원 가입")
     @PostMapping("/sign-up")
-    public ApiResponse signUp(@RequestBody SignUpRequest request) {
-        return ApiResponse.success(signService.registMember(request));
+    public ApiResponse signUp(@RequestBody SignUpRequest request) {     //JSON 데이터를 SignUpRequest 객체로 변환
+        return ApiResponse.success(signService.registMember(request));  //이 객체를 이용하여 함수를 호출하여 회원 가입을 수행한 후, 성공적인 응답으로 감싸서 반환
     }
 
     @Operation(summary = "로그인")

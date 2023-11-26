@@ -12,25 +12,25 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.NoSuchElementException;
 
-@RestControllerAdvice
+@RestControllerAdvice   //전역적으로 예외를 처리하는 핸들러 클래스
 public class ExceptionResponseHandler {
-    @ExceptionHandler({IllegalArgumentException.class, NoSuchElementException.class})
+    @ExceptionHandler({IllegalArgumentException.class, NoSuchElementException.class})   //클라이언트의 잘못된 요청이나 찾을 수 없는 자원에 대한 요청 등에서 발생하는 일반적인 예외를 처리
     public ResponseEntity<ApiResponse> handleCommonException(Exception e) {
         return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage()));
     }
 
-    @ExceptionHandler(AccessDeniedException.class)
+    @ExceptionHandler(AccessDeniedException.class)  //보안 권한이 없는 경우 발생하는 예외를 처리
     public ResponseEntity<ApiResponse> handleAccessDeniedException() {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ApiResponse.error("접근이 거부되었습니다."));
     }
 
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(Exception.class)  //예상치 못한 예외가 발생했을 때 처리
     public ResponseEntity<ApiResponse> handleUnexpectedException() {
         return ResponseEntity.internalServerError().body(ApiResponse.error("서버에 문제가 발생했습니다."));
     }
 
-    @ExceptionHandler(SignatureException.class)
-    public ResponseEntity<ApiResponse> handleSignatureException() {
+    @ExceptionHandler(SignatureException.class) //
+    public ResponseEntity<ApiResponse> handleSignatureException() { //WT(JSON Web Token)와 관련된 예외를 처
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponse.error("토큰이 유효하지 않습니다."));
     }
 

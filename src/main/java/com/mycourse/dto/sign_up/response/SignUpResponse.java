@@ -3,6 +3,7 @@ package com.mycourse.dto.sign_up.response;
 import com.mycourse.entity.Member;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.util.List;
 import java.util.UUID;
 
 public record SignUpResponse(
@@ -16,8 +17,8 @@ public record SignUpResponse(
         Integer stdnum,
         @Schema(description = "학년",example = "2")
         Integer grade,
-        @Schema(description = "이수 과목",example = "[123,124]")
-        String subject
+        @Schema(description = "이수 과목", example = "[[123, 124], [125, 126]]")
+        List<List<Integer>> subject
 ) {
     public static SignUpResponse from(Member member) {
         return new SignUpResponse(

@@ -20,7 +20,7 @@ public class TokenProvider {
     private final long expirationHours;
     private final String issuer;
 
-    public TokenProvider(
+    public TokenProvider(   // JWT(JSON Web Token)를 생성하고 검증하는 서비스를 제공
             @Value("${secret-key}") String secretKey,
             @Value("${expiration-hours}") long expirationHours,
             @Value("${issuer}") String issuer
@@ -30,7 +30,7 @@ public class TokenProvider {
         this.issuer = issuer;
     }
 
-    public String createToken(String userSpecification) {
+    public String createToken(String userSpecification) {   //주어진 사용자 정보를 기반으로 JWT를 생성
         return Jwts.builder()
                 .signWith(new SecretKeySpec(secretKey.getBytes(), SignatureAlgorithm.HS512.getJcaName()))
                 .setSubject(userSpecification)
@@ -40,7 +40,7 @@ public class TokenProvider {
                 .compact();
     }
 
-    public String validateTokenAndGetSubject(String token) {
+    public String validateTokenAndGetSubject(String token) {    //주어진 토큰을 검증하고 토큰의 주체(subject)를 반환
         return Jwts.parserBuilder()
                 .setSigningKey(secretKey.getBytes())
                 .build()

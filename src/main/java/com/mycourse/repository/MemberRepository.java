@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface MemberRepository extends JpaRepository<Member, UUID> {
-    Optional<Member> findByAccount(String account);
-    List<Member> findAllByType(MemberType type);
+public interface MemberRepository extends JpaRepository<Member, UUID> { //Member는 엔티티, UUID는 엔티티의 식별자
+    Optional<Member> findByAccount(String account); //계정 정보 기반 db에서 회원 찾는 메서드
+    List<Member> findAllByType(MemberType type);    //해당 타입의 모든 회원을 찾는 메서드
 }
