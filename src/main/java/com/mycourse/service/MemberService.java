@@ -1,5 +1,6 @@
 package com.mycourse.service;
 
+import com.mycourse.common.MemberType;
 import com.mycourse.repository.MemberRepository;
 import com.mycourse.dto.member.request.MemberUpdateRequest;
 import com.mycourse.dto.member.response.MemberDeleteResponse;
@@ -10,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
@@ -42,5 +44,12 @@ public class MemberService {
                     return MemberUpdateResponse.of(true, member);
                 })
                 .orElseThrow(() -> new IllegalArgumentException("아이디 또는 비밀번호가 일치하지 않습니다."));
+    }
+
+    @Transactional(readOnly = true)
+    public List<MemberInfoResponse> getMembers() {
+        return memberRepository.findAllByType(MemberType.USER).stream()
+                .map(MemberInfoResponse::from)  //엔티티->DTO 변환 후
+                .toList();  //리스트로 반환
     }
 }

@@ -9,33 +9,28 @@ import java.util.List;
 import java.util.UUID;
 
 public record MemberInfoResponse(
-        @Schema(description = "회원 고유키", example = "c0a80121-7aeb-4b4b-8b0a-6b1c032f0e4a")
-        UUID id,
-        @Schema(description = "회원 아이디", example = "cbnu2020039028")
-        String account,
-        @Schema(description = "전공", example = "소프트웨어")
-        String major,
+        @Schema(description = "선호 과목", example = "ai")
+        String prefer,
         @Schema(description = "학번", example = "20")
         Integer stdnum,
         @Schema(description = "학년",example = "2")
         Integer grade,
         @Schema(description = "회원 타입", example = "USER")
         MemberType type,
-        @Schema(description = "회원 생성일", example = "2023-22-22T15:00:00")
-        LocalDateTime createdAt,
         @Schema(description = "이수 과목", example = "[[123, 124], [125, 126]]")
-        List<List<Integer>> subject
+        List<List<Integer>> subject,
+        @Schema(description = "공개 여부", example = "true")
+        Boolean onoff
+
 ) {
     public static MemberInfoResponse from(Member member) {  //Member 엔티티 객체에서 MemberInfoResponse 객체로 변환
         return new MemberInfoResponse(
-                member.getId(),
-                member.getAccount(),
-                member.getMajor(),
+                member.getPrefer(),
                 member.getStdnum(),
                 member.getGrade(),
                 member.getType(),
-                member.getCreatedAt(),
-                member.getSubject()
+                member.getSubject(),
+                member.getOnoff()
         );
     }
 }

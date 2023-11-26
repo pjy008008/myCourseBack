@@ -24,14 +24,15 @@ public class Member {
     private String account;
     @Column(nullable = false)
     private String password;
-    private String major;
+    private String prefer;
     private Integer stdnum;
     private Integer grade;
+    private Boolean onoff;
     private List<List<Integer>> subject;
     @Enumerated(EnumType.STRING)    //열거형 타입의 필드를 문자열로 매핑하도록 지정
     private MemberType type;
-    @CreationTimestamp
-    private LocalDateTime createdAt;
+
+
     @Id //해당 필드가 기본 키임
     @GeneratedValue(strategy = GenerationType.UUID) //기본 키 값을 UUID를 자자동 생성
     private UUID id;
@@ -40,32 +41,35 @@ public class Member {
         return Member.builder()
                 .account(request.account())
                 .password(encoder.encode(request.password()))
-                .major(request.major())
+                .prefer(request.prefer())
                 .stdnum(request.stdnum())
                 .grade(request.grade())
                 .subject(request.subject())
+                .onoff(request.onoff())
                 .type(MemberType.USER)
                 .build();
     }
 
     @Builder
-    private Member(String account, String password, String major, Integer stdnum, Integer grade,List subject, MemberType type) {
+    private Member(String account, String password, String prefer, Integer stdnum, Integer grade,List subject, MemberType type, Boolean onoff) {
         this.account = account;
         this.password = password;
-        this.major = major;
+        this.prefer = prefer;
         this.stdnum = stdnum;
         this.grade = grade;
         this.subject = subject;
         this.type = type;
+        this.onoff = onoff;
 
     }
 
     public void update(MemberUpdateRequest newMember, PasswordEncoder encoder) {
         this.password = newMember.newPassword() == null || newMember.newPassword().isBlank()
                 ? this.password : encoder.encode(newMember.newPassword());
-        this.major = newMember.major();
+        this.prefer = newMember.prefer();
         this.stdnum = newMember.stdnum();
         this.grade = newMember.grade();
         this.subject = newMember.subject();
+        this.onoff = newMember.onoff();
     }
 }
