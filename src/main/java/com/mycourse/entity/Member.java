@@ -26,7 +26,7 @@ public class Member {
     private String password;
     private String prefer;
     private Integer stdnum;
-    private Integer grade;
+    private Integer completionsem;
     private Boolean onoff;
     private List<List<Integer>> subject;
     @Enumerated(EnumType.STRING)    //열거형 타입의 필드를 문자열로 매핑하도록 지정
@@ -43,7 +43,7 @@ public class Member {
                 .password(encoder.encode(request.password()))
                 .prefer(request.prefer())
                 .stdnum(request.stdnum())
-                .grade(request.grade())
+                .completionsem(request.completionsem())
                 .subject(request.subject())
                 .onoff(request.onoff())
                 .type(MemberType.USER)
@@ -51,12 +51,12 @@ public class Member {
     }
 
     @Builder
-    private Member(String account, String password, String prefer, Integer stdnum, Integer grade,List subject, MemberType type, Boolean onoff) {
+    private Member(String account, String password, String prefer, Integer stdnum, Integer completionsem,List subject, MemberType type, Boolean onoff) {
         this.account = account;
         this.password = password;
         this.prefer = prefer;
         this.stdnum = stdnum;
-        this.grade = grade;
+        this.completionsem = completionsem;
         this.subject = subject;
         this.type = type;
         this.onoff = onoff;
@@ -68,7 +68,7 @@ public class Member {
                 ? this.password : encoder.encode(newMember.newPassword());
         this.prefer = newMember.prefer();
         this.stdnum = newMember.stdnum();
-        this.grade = newMember.grade();
+        this.completionsem = newMember.completionsem();
         this.subject = newMember.subject();
         this.onoff = newMember.onoff();
     }

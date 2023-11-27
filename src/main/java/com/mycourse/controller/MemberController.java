@@ -41,7 +41,7 @@ public class MemberController {
 
 
     @Operation(summary = "회원 목록 조회")    //Swagger(OpenAPI) 문서를 자동으로 생성하기 위한 어노테이션 -> 메서드에 대한 설명(summary)을 지정
-    @GetMapping("/members")
+    @GetMapping("/everyone")
     public ApiResponse getAllMembers() {
         return ApiResponse.success(memberService.getMembers());
     } //회원 목록을 가져온 후, 성공적인 응답으로 감싸서 반환

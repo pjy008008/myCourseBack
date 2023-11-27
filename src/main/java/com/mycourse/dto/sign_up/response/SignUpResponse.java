@@ -15,9 +15,9 @@ public record SignUpResponse(
         String prefer,
         @Schema(description = "학번", example = "20")
         Integer stdnum,
-        @Schema(description = "학년/학기",example = "4")
-        Integer grade,
-        @Schema(description = "이수 과목", example = "[[123, 124], [125, 126]]")
+        @Schema(description = "이수 학기",example = "6")
+        Integer completionsem,
+        @Schema(description = "이수 과목", example = "[[], [], [], [], [], [], [], []]")
         List<List<Integer>> subject,
         @Schema(description = "공개 여부", example = "true")
         Boolean onoff
@@ -28,7 +28,7 @@ public record SignUpResponse(
                 member.getAccount(),
                 member.getPrefer(),
                 member.getStdnum(),
-                member.getGrade(),
+                member.getCompletionsem(),
                 member.getSubject(),
                 member.getOnoff()
         );

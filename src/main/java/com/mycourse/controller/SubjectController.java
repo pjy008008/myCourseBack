@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @UserAuthorize
 @RestController
-@RequestMapping("/subject")
+@RequestMapping("/subject")  // Use the common path at the class level
 public class SubjectController {
     private final SubjectService subjectService;
 
-    @Operation(summary = "과목 목록 조회")    //Swagger(OpenAPI) 문서를 자동으로 생성하기 위한 어노테이션 -> 메서드에 대한 설명(summary)을 지정
-    @GetMapping("/subject")
+    @Operation(summary = "과목 목록 조회")
+    @GetMapping  // Remove the "/main" path here, as it's already defined in the class-level annotation
     public ApiResponse getAllSubjects() {
         return ApiResponse.success(subjectService.getSubjects());
-    } //회원 목록을 가져온 후, 성공적인 응답으로 감싸서 반환
+    }
 }
