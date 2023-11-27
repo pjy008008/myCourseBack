@@ -4,9 +4,7 @@ import com.mycourse.common.MemberType;
 import com.mycourse.entity.Member;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 public record MemberInfoResponse(
         @Schema(description = "선호 과목", example = "ai")
