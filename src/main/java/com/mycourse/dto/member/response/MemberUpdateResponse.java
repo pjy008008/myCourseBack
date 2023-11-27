@@ -13,14 +13,14 @@ public record MemberUpdateResponse(
         String prefer,
         @Schema(description = "학번", example = "20")
         Integer stdnum,
-        @Schema(description = "학년",example = "2")
-        Integer grade,
+        @Schema(description = "이수 학기",example = "6")
+        Integer completionsem,
         @Schema(description = "이수 과목", example = "[[123, 124], [125, 126]]")
         List<List<Integer>> subject,
         @Schema(description = "공개 여부", example = "true")
         Boolean onoff
 ) {
     public static MemberUpdateResponse of(boolean result, Member member) {
-        return new MemberUpdateResponse(result, member.getPrefer(), member.getStdnum(),member.getGrade(),member.getSubject(),member.getOnoff());
+        return new MemberUpdateResponse(result, member.getPrefer(), member.getStdnum(),member.getCompletionsem(),member.getSubject(),member.getOnoff());
     }
 }

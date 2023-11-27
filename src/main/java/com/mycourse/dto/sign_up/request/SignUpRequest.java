@@ -13,9 +13,9 @@ public record SignUpRequest(
         String prefer,
         @Schema(description = "학번",example = "20")
         Integer stdnum,
-        @Schema(description = "학년",example = "2")
-        Integer grade,
-        @Schema(description = "이수 과목", example = "[[123, 124], [125, 126]]")
+        @Schema(description = "이수 학기",example = "2")
+        Integer completionsem,
+        @Schema(description = "이수 과목", example = "[[], [], [], [], [], [], [], []]")
         List<List<Integer>> subject,
         @Schema(description = "공개 여부", example = "true")
         Boolean onoff
