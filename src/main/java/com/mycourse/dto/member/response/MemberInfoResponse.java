@@ -30,7 +30,7 @@ public record MemberInfoResponse(
                 member.getStdnum(),
                 member.getCompletionsem(),
                 member.getType(),
-                member.getSubject(),
+                member.getSubjectAsList(),
                 member.getOnoff()
         );
     }

@@ -21,6 +21,6 @@ public record MemberUpdateResponse(
         Boolean onoff
 ) {
     public static MemberUpdateResponse of(boolean result, Member member) {
-        return new MemberUpdateResponse(result, member.getPrefer(), member.getStdnum(),member.getCompletionsem(),member.getSubject(),member.getOnoff());
+        return new MemberUpdateResponse(result, member.getPrefer(), member.getStdnum(),member.getCompletionsem(),member.getSubjectAsList(),member.getOnoff());
     }
 }
