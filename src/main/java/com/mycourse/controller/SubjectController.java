@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @UserAuthorize
 @RestController
-@RequestMapping("/subject")  // Change the base path to "/subject"
+@RequestMapping("/subject")  // Use the common path at the class level
 public class SubjectController {
     private final SubjectService subjectService;
 
@@ -22,4 +22,3 @@ public class SubjectController {
         return ApiResponse.success(subjectService.getSubjects());
     }
 }
-

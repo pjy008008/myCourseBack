@@ -1,5 +1,8 @@
 package com.mycourse.entity;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.mycourse.common.MemberType;
 import com.mycourse.dto.member.request.MemberUpdateRequest;
 import com.mycourse.dto.sign_up.request.SignUpRequest;
@@ -8,19 +11,17 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.time.LocalDateTime;
+import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED) //파라미터가 없는 생성자를 생성하되, 접근 제한자를 protected로 설정
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
 public class Member {
-    @Column(nullable = false, scale = 20, unique = true) //고유해야 함
+    @Column(nullable = false, scale = 20, unique = true)
     private String account;
     @Column(nullable = false)
     private String password;
@@ -28,13 +29,12 @@ public class Member {
     private Integer stdnum;
     private Integer completionsem;
     private Boolean onoff;
-    private List<List<Integer>> subject;
-    @Enumerated(EnumType.STRING)    //열거형 타입의 필드를 문자열로 매핑하도록 지정
+    private String subject;
+    @Enumerated(EnumType.STRING)
     private MemberType type;
 
-
-    @Id //해당 필드가 기본 키임
-    @GeneratedValue(strategy = GenerationType.UUID) //기본 키 값을 UUID를 자자동 생성
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     public static Member from(SignUpRequest request, PasswordEncoder encoder) {
@@ -51,25 +51,47 @@ public class Member {
     }
 
     @Builder
-    private Member(String account, String password, String prefer, Integer stdnum, Integer completionsem,List subject, MemberType type, Boolean onoff) {
+    private Member(String account, String password, String prefer, Integer stdnum, Integer completionsem, List subject, MemberType type, Boolean onoff) {
         this.account = account;
         this.password = password;
         this.prefer = prefer;
         this.stdnum = stdnum;
         this.completionsem = completionsem;
-        this.subject = subject;
+        this.setSubjectFromList(subject);
         this.type = type;
         this.onoff = onoff;
-
     }
 
     public void update(MemberUpdateRequest newMember, PasswordEncoder encoder) {
-        this.password = newMember.newPassword() == null || newMember.newPassword().isBlank()
+        this.password = (newMember.newPassword() == null || newMember.newPassword().isBlank())
                 ? this.password : encoder.encode(newMember.newPassword());
         this.prefer = newMember.prefer();
         this.stdnum = newMember.stdnum();
         this.completionsem = newMember.completionsem();
-        this.subject = newMember.subject();
+        this.setSubjectFromList(newMember.subject());
         this.onoff = newMember.onoff();
+    }
+
+    // 문자열을 List of List로 변환하는 메서드
+    public List<List<Integer>> getSubjectAsList() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.readValue(subject, new TypeReference<List<List<Integer>>>(){});
+        } catch (IOException e) {
+            // 예외 처리
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // List of List를 문자열로 변환하는 메서드
+    public void setSubjectFromList(List<List<Integer>> subjectList) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            this.subject = objectMapper.writeValueAsString(subjectList);
+        } catch (JsonProcessingException e) {
+            // 예외 처리
+            e.printStackTrace();
+        }
     }
 }

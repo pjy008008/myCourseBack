@@ -2,6 +2,7 @@ package com.mycourse.service;
 
 import com.mycourse.entity.Subject;
 import com.mycourse.dto.subject.response.SubjectResponse;
+import com.mycourse.entity.Subject;
 import com.mycourse.repository.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

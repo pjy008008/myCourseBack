@@ -29,7 +29,7 @@ public record SignUpResponse(
                 member.getPrefer(),
                 member.getStdnum(),
                 member.getCompletionsem(),
-                member.getSubject(),
+                member.getSubjectAsList(),
                 member.getOnoff()
         );
     }
