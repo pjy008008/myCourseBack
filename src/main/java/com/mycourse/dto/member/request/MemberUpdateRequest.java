@@ -15,7 +15,7 @@ public record MemberUpdateRequest(
         Integer stdnum,
         @Schema(description = "이수 학기",example = "6")
         Integer completionsem,
-        @Schema(description = "이수 과목", example = "[[123, 124], [125, 126]]")
+        @Schema(description = "이수 과목", example = "[[5118001, 5118002], [5118007, 5118008],[],[],[],[],[],[]]")
         List<List<Integer>> subject,
         @Schema(description = "공개 여부", example = "true")
         Boolean onoff
