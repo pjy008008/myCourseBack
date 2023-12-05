@@ -38,13 +38,38 @@ public class MemberService {
     @Transactional
     public MemberUpdateResponse updateMember(UUID id, MemberUpdateRequest request) {
         return memberRepository.findById(id)
-                .filter(member -> encoder.matches(request.password(), member.getPassword()))
                 .map(member -> {
-                    member.update(request, encoder);
-                    return MemberUpdateResponse.of(true, member);
+                    // 입력한 비밀번호와 새로운 비밀번호 모두 null이거나
+                    // 입력한 비밀번호가 null이거나 원래 비밀번호와 일치하면 업데이트 수행
+                    if ((request.password() == null && request.newPassword() == null) ||
+                            (request.password() == null || encoder.matches(request.password(), member.getPassword()))) {
+                        if(request.newPassword() != null){
+                            member.setPassword(request, encoder);
+                        }
+
+                        if (request.prefer() != null) {
+                            member.setPrefer(request.prefer());
+                        }
+                        if (request.stdnum() != null) {
+                            member.setStdnum(request.stdnum());
+                        }
+                        if (request.completionsem() != null) {
+                            member.setCompletionsem(request.completionsem());
+                        }
+                        if (request.onoff() != null) {
+                            member.setOnoff(request.onoff());
+                        }
+                        if (request.subject() != null) {
+                            member.setSubjectFromList(request.subject());
+                        }
+                        return MemberUpdateResponse.of(true, member);
+                    }
+                    // 입력한 비밀번호가 null이 아니고 원래 비밀번호와 일치하지 않으면 예외 발생
+                    throw new IllegalArgumentException("아이디 또는 비밀번호가 일치하지 않습니다.");
                 })
-                .orElseThrow(() -> new IllegalArgumentException("아이디 또는 비밀번호가 일치하지 않습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("해당 ID에 해당하는 회원을 찾을 수 없습니다."));
     }
+
 
     @Transactional(readOnly = true)
     public List<MemberInfoResponse> getMembers() {

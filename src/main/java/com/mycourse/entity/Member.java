@@ -84,6 +84,35 @@ public class Member {
         }
     }
 
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public void setPassword(MemberUpdateRequest newMember, PasswordEncoder encoder) {
+        this.password = (newMember.newPassword() == null || newMember.newPassword().isBlank())
+                ? this.password : encoder.encode(newMember.newPassword());
+    }
+
+    public void setPrefer(String prefer) {
+        this.prefer = prefer;
+    }
+
+    public void setStdnum(Integer stdnum) {
+        this.stdnum = stdnum;
+    }
+
+    public void setCompletionsem(Integer completionsem) {
+        this.completionsem = completionsem;
+    }
+
+    public void setOnoff(Boolean onoff) {
+        this.onoff = onoff;
+    }
+
+    public void setType(MemberType type) {
+        this.type = type;
+    }
+
     // List of List를 문자열로 변환하는 메서드
     public void setSubjectFromList(List<List<Integer>> subjectList) {
         ObjectMapper objectMapper = new ObjectMapper();
