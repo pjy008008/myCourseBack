@@ -20,7 +20,9 @@ public record SignUpResponse(
         @Schema(description = "이수 과목", example = "[[], [], [], [], [], [], [], []]")
         List<List<Integer>> subject,
         @Schema(description = "공개 여부", example = "true")
-        Boolean onoff
+        Boolean onoff,
+        @Schema(description = "교양 이수 학점", example = "30")
+        Integer ge
 ) {
     public static SignUpResponse from(Member member) {
         return new SignUpResponse(
@@ -30,7 +32,8 @@ public record SignUpResponse(
                 member.getStdnum(),
                 member.getCompletionsem(),
                 member.getSubjectAsList(),
-                member.getOnoff()
+                member.getOnoff(),
+                member.getGe()
         );
     }
 }

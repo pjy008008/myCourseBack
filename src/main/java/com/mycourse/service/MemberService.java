@@ -59,6 +59,9 @@ public class MemberService {
                         if (request.onoff() != null) {
                             member.setOnoff(request.onoff());
                         }
+                        if (request.ge() != null) {
+                            member.setGe(request.ge());
+                        }
                         if (request.subject() != null) {
                             member.setSubjectFromList(request.subject());
                         }

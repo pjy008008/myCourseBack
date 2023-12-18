@@ -20,7 +20,9 @@ public record MemberInfoResponse(
         @Schema(description = "이수 과목", example = "[[123, 124], [125, 126]]")
         List<List<Integer>> subject,
         @Schema(description = "공개 여부", example = "true")
-        Boolean onoff
+        Boolean onoff,
+        @Schema(description = "교양 이수 학점", example = "30")
+        Integer ge
 
 ) {
     public static MemberInfoResponse from(Member member) {  //Member 엔티티 객체에서 MemberInfoResponse 객체로 변환
@@ -31,7 +33,8 @@ public record MemberInfoResponse(
                 member.getCompletionsem(),
                 member.getType(),
                 member.getSubjectAsList(),
-                member.getOnoff()
+                member.getOnoff(),
+                member.getGe()
         );
     }
 }

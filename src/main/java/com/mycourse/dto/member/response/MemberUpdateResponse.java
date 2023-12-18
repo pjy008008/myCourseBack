@@ -18,9 +18,12 @@ public record MemberUpdateResponse(
         @Schema(description = "이수 과목", example = "[[123, 124], [125, 126]]")
         List<List<Integer>> subject,
         @Schema(description = "공개 여부", example = "true")
-        Boolean onoff
+        Boolean onoff,
+        @Schema(description = "교양 이수 학점", example = "30")
+        Integer ge
+
 ) {
     public static MemberUpdateResponse of(boolean result, Member member) {
-        return new MemberUpdateResponse(result, member.getPrefer(), member.getStdnum(),member.getCompletionsem(),member.getSubjectAsList(),member.getOnoff());
+        return new MemberUpdateResponse(result, member.getPrefer(), member.getStdnum(),member.getCompletionsem(),member.getSubjectAsList(),member.getOnoff(),member.getGe());
     }
 }
