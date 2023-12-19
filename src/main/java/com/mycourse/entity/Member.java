@@ -29,9 +29,11 @@ public class Member {
     private Integer stdnum;
     private Integer completionsem;
     private Boolean onoff;
+    private Integer ge;
     private String subject;
     @Enumerated(EnumType.STRING)
     private MemberType type;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -46,12 +48,13 @@ public class Member {
                 .completionsem(request.completionsem())
                 .subject(request.subject())
                 .onoff(request.onoff())
+                .ge(request.ge())
                 .type(MemberType.USER)
                 .build();
     }
 
     @Builder
-    private Member(String account, String password, String prefer, Integer stdnum, Integer completionsem, List subject, MemberType type, Boolean onoff) {
+    private Member(String account, String password, String prefer, Integer stdnum, Integer completionsem, List subject, MemberType type, Boolean onoff, Integer ge) {
         this.account = account;
         this.password = password;
         this.prefer = prefer;
@@ -60,6 +63,7 @@ public class Member {
         this.setSubjectFromList(subject);
         this.type = type;
         this.onoff = onoff;
+        this.ge = ge;
     }
 
     public void update(MemberUpdateRequest newMember, PasswordEncoder encoder) {
@@ -70,6 +74,7 @@ public class Member {
         this.completionsem = newMember.completionsem();
         this.setSubjectFromList(newMember.subject());
         this.onoff = newMember.onoff();
+        this.ge = newMember.ge();
     }
 
     // 문자열을 List of List로 변환하는 메서드
@@ -96,19 +101,16 @@ public class Member {
     public void setPrefer(String prefer) {
         this.prefer = prefer;
     }
-
     public void setStdnum(Integer stdnum) {
         this.stdnum = stdnum;
     }
-
     public void setCompletionsem(Integer completionsem) {
         this.completionsem = completionsem;
     }
-
     public void setOnoff(Boolean onoff) {
         this.onoff = onoff;
     }
-
+    public void setGe(Integer ge) { this.ge = ge; }
     public void setType(MemberType type) {
         this.type = type;
     }
